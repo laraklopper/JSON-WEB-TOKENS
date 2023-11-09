@@ -11,6 +11,8 @@ A JWT is a string that consists of three parts, namely the `header`, `payload`, 
 
 ### 1. HEADER
 
+The header is a JSON object describing the token. The header typically consists of two parts: the type of the token, which is JWT, and the signing algorithm being used. 
+
 ### 2. PAYLOAD
 
 ### 3.  SIGNITURE
