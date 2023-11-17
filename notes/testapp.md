@@ -18,16 +18,14 @@ npm i express
 npm i jsonwebtoken
 npm i body-parser
 npm i nodemon
-npm i dotenv
 ```
 ## JAVASCRIPT
 ```
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-require('dotenv').config()
 const app = express();
-const port = process.env.PORT || 8080
+const port = 8000
 
 app.use(bodyParser.json());
 
