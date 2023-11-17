@@ -25,8 +25,9 @@ npm i dotenv
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+require('dotenv').config()
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8080
 
 app.use(bodyParser.json());
 
