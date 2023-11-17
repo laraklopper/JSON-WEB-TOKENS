@@ -1,16 +1,21 @@
 const express = require('express');// Import express for creating API's endpoints
 const jwt = require('jsonwebtoken');// Import jwt for API's endpoints authentication
-
-
 const bodyParser = require('body-parser');
-// Creates an Express application, initiate
-// express top level function
+
+// Creating an instance of Express
 const app = express();
-const port = 8000// A port for serving API's
+const port = 8000;
 
 
-app.use(bodyParser.json());
-//Fake database
+app.use(bodyParser.json());// Adding middleware to parse JSON requests
+
+// Mock database with user credentials
+// let database = [
+//     { name: 'Dylan', password: 'hashedPassword1' },
+//     { name: 'Ockert', password: 'hashedPassword2' },
+//     { name: 'Ricky', password: 'hashedPassword3' }
+// ];
+
 let database = [
     {
         name: 'Dylan',
@@ -21,100 +26,94 @@ let database = [
         password: 'surfing'
     },
     {
-        name: 'Lara',
-        password: 'hiking'
+        name: 'Ricky',
+        password: 'running'
     }
 ]
 
-// A demo get route
+// Define a route for handling GET requests to the root endpoint ('/')
 app.get('/', (req, res) => {
+    // Respond with a JSON object containing information about the route and authentication status
     res.json({
-        route: '/',
-        authentication: false
-    })
-})
+        route: '/', // Specify the route in the response
+        authentication: false // Set authentication status to false by default
+    });
+});
 
-// Allow json data
-app.use(express.json());
 
+// Route for user login
 app.post('/login', (req, res) => {
-    // Get the name to the json body data
-    const name = req.body.name;
+    // Extracting username and password from the request body
+    const name = req.body.name;    // Extract the name to the json body data
+    const password = req.body.password; //Extract the password from the json body data
 
-    // Get the password to the json body data
-    const password = req.body.password;
-
-    // Make two variable for further use
+    // Variables to check if the user is present in the database
     let isPresent = false;
-    let isPresentIndex = null
+    let isPresentIndex = null;
 
-    // iterate a loop to the data items and
-    // check what data are matched.
-    for (let i= 0;  i<database.length; i++) {
-        // If data name are matched so check
-        // the password are correct or not
-        if (database[i].name === name && database[i].password ===password) {
-            // If both are correct so make isPresent variable true and store the data index
+    // Looping through the database to find the user
+    for (let i = 0; i < database.length; i++) {
+        if (database[i].name === name && database[i].password === password) {
             isPresent = true;
             isPresentIndex = i;
-
-            break;// Break the loop after matching successfully
-        };
-        
+            break;
+        }
     }
-    // If isPresent is true, then create a token and pass to the response
-    if (isPresent) {
 
-        // The jwt.sign method is used to create the token
-        const token = jwt.sign(
-            database[isPresentIndex],
-            'secret'
-        )
+// Conditional rendering to check if the user is present in the database
+if (isPresent) {
+    // If present, create a JWT token using the jwt.sign method
+    const token = jwt.sign({ name: database[isPresentIndex].name }, 'yourSecretKey');
 
-        //Pass the data or token in response
-        res.json({
-           login: true,
-           token: token,
-           data: database[isPresentIndex]
-        });
-    } 
-    else {
-        // If isPresent is false return the error
+    // Respond with a JSON object indicating successful login
+    res.json({
+        login: true,
+        token: token, // Include the generated token in the response
+        data: database[isPresentIndex] // Include user data in the response
+    });
+} 
+else {
+    // If the user is not present in the database or credentials are incorrect
+    res.json({
+        login: false,
+        error: 'Invalid credentials.' // Provide an error message in the response
+    });
+}
+});
+
+// Route for checking user authentication using the provided token
+app.get("/auth", (req, res) => {
+    // Extracting the token from the request headers
+    const token = req.headers.authorization;
+
+    // If token is present, verify it using the secret key
+    if (token) {
+        try {
+            const decode = jwt.verify(token, 'yourSecretKey');
+            // If verification is successful, send user data in the response
+            res.json({
+                login: true,
+                data: decode,
+            });
+        } catch (error) {
+            // If verification fails, send an error message
+            res.json({
+                login: false,
+                error: 'Invalid token.'
+            });
+        }
+    } else {
+        // If token is not provided, send an error message
         res.json({
             login: false,
-            error: 'please check the name and password.'
-        })    
+            error: 'Token not provided.'
+        });
     }
-})
-
-//Verify route
-app.get("/auth", (req, res) =>{
-    // Get token value to the json body
-    const token = req.body.token;
-
-    // If the token is present Verify the token using jwt.verify method
-    if (token) {
-        const decode =jwt.verify(token, "secret");
-
-        //  Return response with decode data
-        res.json({
-            login:true,
-            data: decode,
-        })
-    } 
-    else {
-        // Return response with error
-        res.json({
-            login:false,
-            data: "error"
-        })
-        
-    }
-})
+});
 
 
 
-// Listen the server
+// Start the server and listen on the specified port
 app.listen(port, () =>
     console.log(`Now listening at http://localhost:${port}`)
-)
+);
