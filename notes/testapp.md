@@ -1,5 +1,17 @@
 # TEST APP
 
+## SETUP
+### CREATE-APP
+```
+mkdir dummy-app
+cd dummy-app
+npm init
+npm install express
+npm i jsonwebtoken
+npm i body-parser
+npm i nodemon
+```
+
 ## DEPENDENCIES
 ```
 npm i express
