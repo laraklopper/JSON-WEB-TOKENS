@@ -1,6 +1,7 @@
 # JSON WEB TOKENS 
 
-A **JSON Web Token ("JWT")** is a JSON object which is primarily used to securely transfer information between two parties over the web and can be used as an authentication system and can also be used for information exchange. JWT is signed and encoded, not encrypted. 
+JSON WEB TOKENS ('JWT') is a way of representing data that does not allow tampering during transit, & can be validated using encryption keys. When a server recieves a JWT it has a surefire way of determining whether data is legitimate. JSW is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs are commonly used for authentication and authorization in web development. A JWT is the most common way to identify an authenticated user.
+
 
 ## AUTHENTICATION
 The purpose of using JWT is to ensure the authenticity of the data. At the most basic level, authentication verifies a user’s identity. Authentification with JSW is a way of representing data that does not allow tampering during transit and can be validated using encryption keys. The purpose of authenticating a user is to ensure they only have access to the resources they should.
