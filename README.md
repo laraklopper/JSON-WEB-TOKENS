@@ -15,6 +15,8 @@ The header is a JSON object describing the token. The header typically consists 
 
 ### 2. PAYLOAD
 
+A payload is a JSON object
+
 ### 3.  SIGNITURE
 
 
