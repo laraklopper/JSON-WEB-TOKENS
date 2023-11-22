@@ -1,11 +1,13 @@
-const express = require('express');
-const bodyParser =require('body-parser');
-const jwt = require('jsonwebtoken');
-const app = express();
-const port = 8000;
+const express = require('express');// Import Express Web framework for handling HTTP requests
+const bodyParser = require('body-parser');// Middleware to parse request bodies
+const jwt = require('jsonwebtoken');// JSON Web Token library
+const app = express();// Create an Express application
+const port = 8000;//Specify the port number
 
+//==========Middleware setup================
 app.use(bodyParser.json());
 
+//================HANDLE POST REQUESTS TO THE '/login' ENDPOINT===========
 app.post('/login', (req, res) => {
     const usr = req.body.username
     const psw = req.body.password
@@ -23,6 +25,7 @@ app.post('/login', (req, res) => {
     }
 })
 
+//================HANDLE GET REQUESTS TO THE '/resource' ENDPOINT===========
 app.get('/resource', (req, res) => {
     const auth = req.headers['authorization']
     const token =auth
@@ -33,6 +36,8 @@ app.get('/resource', (req, res) => {
         res.status(401).send({'err': 'Bad JWT!'})
     }
 })
+
+//================HANDLE GET REQUESTS TO THE '/admin_resource' ENDPOINT===========
 
 app.get('/admin_resource', (req, res) => {
     const token = req.headers['authorization']
@@ -50,6 +55,8 @@ app.get('/admin_resource', (req, res) => {
     }
 })
 
+//====================START THE SERVER===================
+// Start the server and listen on the specified port
 app.listen(port,() =>{
     console.log(`Now listening at http://localhost:${port}`)
 })
