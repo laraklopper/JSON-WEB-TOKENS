@@ -10,15 +10,35 @@ app.use(bodyParser.json());// Add middleware to parse JSON requests
 let data = [
     {
         name: 'Mazvita',
+        access: '/a'
+
     },
     {
-        name: 'Meagan'
+        name: 'Meagan',
+        access: ["/a","/b" ]
     },
     {
-        name: "Kabelo"
+        name: "Kabelo",
+        access: ['/b', '/c']
     }
 ]
-
+// let data = [
+//     {
+//         name: 'Mazvita',
+//         password: "secret",
+//         access: ["a"],
+//     },
+//     {
+//         name: 'Meagan',
+//         password: 'secret',
+//         access: ["a", "b"]
+//     },
+//     {
+//         name: "Kabelo",
+//         password: "secret",
+//         access: ["b", "c"]
+//     }
+// ]
 
 app.post('/login', (req, res) => {
     // const auth = req.headers['authorization']
