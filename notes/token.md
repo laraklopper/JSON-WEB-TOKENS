@@ -6,13 +6,13 @@ JSON Web Tokens (JWT) are a popular way to secure communication between differen
 ## HOW TO USE JWT IN THE EXPRESS BACKEND SERVER
 
 ### 1. **Install the necessary packages:**
-   You need to install the `jsonwebtoken` package to work with JWTs in your Express.js application.
+   Install the `jsonwebtoken` package to work with JWTs in your Express.js application.
 
    ```bash
    npm install jsonwebtoken
    ```
 
-### 2. **Setup your Express app:**
+### 2. **Setup the Express app:**
    Set up your Express application and include the necessary middleware. For example:
 
    ```javascript
@@ -25,4 +25,7 @@ JSON Web Tokens (JWT) are a popular way to secure communication between differen
 
    app.use(bodyParser.json());
   ```
+## POSTMAN
 
+Add the token in the header. - the value => Authorization
+and the key => the token
