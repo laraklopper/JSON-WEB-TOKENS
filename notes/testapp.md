@@ -31,8 +31,9 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 8000// A port for serving API's
 
-
 app.use(bodyParser.json());
+```
+```
 //Fake database
 let database = [
     {
@@ -52,7 +53,8 @@ let database = [
         password: 'hiking'
     }
 ]
-
+```
+```
 // A demo get route
 app.get('/', (req, res) => {
     res.json({
@@ -60,7 +62,8 @@ app.get('/', (req, res) => {
         authentication: false
     })
 })
-
+```
+```
 // Allow json data
 app.use(express.json());
 
@@ -138,7 +141,9 @@ app.get("/auth", (req, res) =>{
         
     }
 })
+```
 
+```
 // Listen the server
 app.listen(port, () =>
     console.log(`Now listening at http://localhost:${port}`)
